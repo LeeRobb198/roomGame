@@ -1,0 +1,20 @@
+<p>You are in Room {{ourRoom.name}}</p>
+<p>You've been through {{ numberOfDoors }} doors</p>
+<div>
+  <button (click)="getRoomByName(ourRoom.up)">Up {{ ourRoom.up }}</button>
+  <br>
+  <button (click)="getRoomByName(ourRoom.left)">Left {{ ourRoom.left }}</button>
+  <button (click)="getRoomByName(ourRoom.right)">Right {{ ourRoom.right }}</button>
+  <br>
+  <button (click)="getRoomByName(ourRoom.down)">Down {{ ourRoom.down }}</button>
+  <br>
+  <h3> Items: </h3>
+  <div *ngFor="let item of ourRoom.items">
+    <li>{{ item }}</li>
+  </div>
+  <br>
+  Add an item:
+  <input type="text" [formControl]="newItem">
+  <br>
+  <button (click)="addItemToRoom(newItem.value)">Add {{newItem.value}} to room</button>
+</div>

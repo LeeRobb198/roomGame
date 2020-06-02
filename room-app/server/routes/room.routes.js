@@ -3,8 +3,19 @@ const app = express();
 const roomRoute = express.Router();
 
 // Room model
-// ----------------------------------------------------------------------------
 let Room = require('../models/room');
+
+// Add Room
+// ----------------------------------------------------------------------------
+roomRoute.route('/create').post((req, res, next) => {
+  Room.create(req.body, (error, data) => {
+    if (error) {
+      return next(error)
+    } else {
+      res.json(data)
+    }
+  })
+});
 
 // Get All Rooms
 // ----------------------------------------------------------------------------
@@ -54,6 +65,34 @@ roomRoute.route('/update/:id').put((req, res, next) => {
             console.log('Data updated successfully')
         }
     })
+})
+
+roomRoute.route('/updatebyname/:name').put((req, res, next) => {
+  Room.findOneAndUpdate({name: req.params.name}, {
+    $set: req.body
+  }, (error, data) => {
+    if (error) {
+      return next(error);
+      console.log(error)
+    } else {
+      res.json(data)
+      console.log('Data updated successfully')
+    }
+  })
+})
+
+// Delete room
+// ----------------------------------------------------------------------------
+roomRoute.route('/delete/:id').delete((req, res, next) => {
+  Room.findOneAndRemove(req.params.id, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.status(200).json({
+        msg: data
+      })
+    }
+  })
 })
 
 module.exports = roomRoute;

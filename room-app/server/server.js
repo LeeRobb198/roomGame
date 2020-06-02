@@ -3,17 +3,17 @@ let path = require('path');
 let mongoose = require('mongoose');
 let bodyParser = require('body-parser');
 let cors = require('cors');
+let morgan = require('morgan');
 const app = express();
 var createError = require('createerror');
 
 let dbConfig = require('./database/db');
 const roomRoute = require('./routes/room.routes');
 
-var morgan = require('morgan');
-
-// Connect database to server 
+// Connect database to server
 // ----------------------------------------------------------------------------
 
+mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig.db, {useNewUrlParser: true })
     .then(() => {
     console.log('Database successfully connected');
